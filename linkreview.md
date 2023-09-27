@@ -1,6 +1,6 @@
 # Обзор статей
-| # | Название | Ссылка | О чём | Модель | Релевантность |
-| - | -------- | ------ | ----- | ------ | ------------- |
+| # | Название | Ссылка | О чём | Модель | Задача |
+| - | -------- | ------ | ----- | ------ | ------ |
 | 1 | PeerDA: Data Augmentation via Modeling Peer Relation for Span Identification Tasks | https://arxiv.org/pdf/2210.08855.pdf | Выделяются фрагменты текста, классифицируются и выделяются связи между фрагментами текста | BERT, RoBERTa | span id + tagging |
 | 2 | Findings of the Shared Task on Offensive Span Identification from Code-Mixed Tamil-English Comments | https://arxiv.org/pdf/2205.06118.pdf | Выделяются оскорбительные фрагменты в тексте для соревнования https://competitions.codalab.org/competitions/36395 | RoBERTa | span id |
 | 3 | 3218IR at SemEval-2020 Task 11: Conv1D and Word Embedding in
@@ -18,11 +18,27 @@
 | 15 | Data Augmentation with Dual Training for Offensive Span Detection | https://aclanthology.org/2022.naacl-main.185.pdf | Выделяются фрагменты c помощью GPT | GPT-2 | span id |
 | 16 | Automatic Detection of Sentence Fragments | https://aclanthology.org/P15-2099.pdf | Используются синтаксические деревья и части речи, чтобы выделять фрагменты | syntax tree | span id |
 | 17 | SemEval-2021 Task 5: Toxic Spans Detection | https://aclanthology.org/2021.semeval-1.6.pdf | Выделяются оскорбительные фрагменты текста для соревнования SemEval-2021 Task 5 (обзор решений) | BERT + CRF, RoBERTa | span id |
-| 18 | SemEval-2020 Task 11: Detection of Propaganda Techniques in News Articles | https://aclanthology.org/2020.semeval-1.186.pdf | Обзор решений для соревнования SemEval-2020 Task 11 - детекция пропоганды и манипуляций в новостях | transformers ensamble (used CRF) | span id + tagging |
+| 18 | SemEval-2020 Task 11: Detection of Propaganda Techniques in News Articles | https://aclanthology.org/2020.semeval-1.186.pdf | Описание задачи и обзор решений для соревнования SemEval-2020 Task 11 - детекция пропоганды и манипуляций в новостях | transformers ensamble (used CRF) | span id + tagging |
 | 19 | ApplicaAI at SemEval-2020 Task 11: On RoBERTa-CRF, Span CLS and Whether Self-Training Helps Them | https://aclanthology.org/2020.semeval-1.187.pdf | Представляется решение для выделения фрагментов и классфикации типа пропоганды для соревнования SemEval-2020 Task 11 | RoBERTa-CRF | span id + tagging |
 | 20 | A Unified MRC Framework for Named Entity Recognition | https://arxiv.org/pdf/1910.11476.pdf | Предлагается постановка задачи для решения задачи NER с вложенными фрагментами | LSTM, BERT | nested span id |
 | 21 | Fine-Grained Analysis of Propaganda in News Articles | https://arxiv.org/pdf/1910.02517.pdf | Детекция манипуляций через выделение фрагментов и их классификации | BERT | span id + tagging |
 | 22 | Simple yet Powerful: An Overlooked Architecture for Nested Named Entity Recognition | https://aclanthology.org/2022.coling-1.184.pdf | Решается задача NER с вложенными фрагментами | LSTM-CRF | nested span id |
-| 23 |  |  |  |  |  |
-| 24 |  |  |  |  |  |
+| 23 | Quantifying Controversy on Social Media | https://arxiv.org/pdf/1507.05224.pdf | Строится граф разговора по теме и выделяются стороны которые противоречат друг другу | rule-based graph | polarization |
+| 24 | APE: Argument Pair Extraction from Peer Review and Rebuttal via Multi-task Learning | https://aclanthology.org/2020.emnlp-main.569.pdf | Выделяются пары фрагментов аргументации | BERT + LSTM + CRF | span id |
+| 25 | name | link | about | model | task |
+| 26 | name | link | about | model | task |
+| 27 | name | link | about | model | task |
+| 28 | name | link | about | model | task |
+| 29 | name | link | about | model | task |
+| 30 | name | link | about | model | task |
+| 31 | name | link | about | model | task |
+| 32 | name | link | about | model | task |
+| 33 | name | link | about | model | task |
+| 34 | name | link | about | model | task |
+| 35 | name | link | about | model | task |
+| 36 | name | link | about | model | task |
+| 37 | name | link | about | model | task |
+| 38 | name | link | about | model | task |
+| 39 | name | link | about | model | task |
+| 40 | name | link | about | model | task |
 
