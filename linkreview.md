@@ -26,19 +26,19 @@
 | 23 | APE: Argument Pair Extraction from Peer Review and Rebuttal via Multi-task Learning | [link](https://aclanthology.org/2020.emnlp-main.569.pdf) | Выделяются пары фрагментов аргументации | BERT + LSTM + CRF | span id |
 | 24 | We Can Detect Your Bias: Predicting the Political Ideology of News Articles | [link](https://aclanthology.org/2020.emnlp-main.404.pdf) | Представляют датасет для классификации новостей по политическим идеологиям. | BERT | manipulatiton detection |
 | 25 | SemEval-2007 Task 14: Affective Text | [link](https://aclanthology.org/S07-1013.pdf) | Датасет для классификации эмоций в заголовках новостей | - | emotion detection |
-| 26 | name | link | about | model | task |
-| 27 | name | link | about | model | task |
-| 28 | name | link | about | model | task |
-| 29 | name | link | about | model | task |
-| 30 | name | link | about | model | task |
-| 31 | name | link | about | model | task |
-| 32 | name | link | about | model | task |
-| 33 | name | link | about | model | task |
-| 34 | name | link | about | model | task |
-| 35 | name | link | about | model | task |
-| 36 | name | link | about | model | task |
-| 37 | name | link | about | model | task |
-| 38 | name | link | about | model | task |
-| 39 | name | link | about | model | task |
-| 40 | name | link | about | model | task |
+| 26 | GNNer: Reducing Overlapping in Span-based NER Using Graph Neural Networks | [link](https://aclanthology.org/2022.acl-srw.9.pdf) | Находятся пересекающееся спаны с помощью графовых нейросетей | BERT + GCN | span id |
+| 27 | name | [link]() | about | model | task |
+| 28 | name | [link]() | about | model | task |
+| 29 | name | [link]() | about | model | task |
+| 30 | name | [link]() | about | model | task |
+| 31 | name | [link]() | about | model | task |
+| 32 | name | [link]() | about | model | task |
+| 33 | name | [link]() | about | model | task |
+| 34 | name | [link]() | about | model | task |
+| 35 | name | [link]() | about | model | task |
+| 36 | name | [link]() | about | model | task |
+| 37 | name | [link]() | about | model | task |
+| 38 | name | [link]() | about | model | task |
+| 39 | name | [link]() | about | model | task |
+| 40 | name | [link]() | about | model | task |
 
