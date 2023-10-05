@@ -68,92 +68,67 @@ pdfkeywords={First keyword, Second keyword, More},
 
 \keywords{span identification \and text tagging \and manipulation detection}
 
-\section{Introduction}
+\section{Введение}
 
 Современные средства массовой информации генерируют огромный поток данных на социально-политические темы. При этом они охватывают огромное число читателей и во многом формируют у них определённый набор ценностей. Из этого возникает потребность автоматически обрабатывать новостной поток для выявления манипуляций.
 
 Манипуляцией в тексте назвается воздействие на читателя с целью сформировать определённое отношение к цели (мишени манипуляции). Среди манипуляций можно выделить: эмоциональное воздействие, предоставление недостоверной информации, ложные причинноследственные связи.
 
-К обработке новостного потока можно подходить с точки задачи классификации или регрессии. В 2007 году появилось соревнование SemEval-2007 Task 14 \cite{semeval}, где основная задача - выявление эмоциональной нагрузки заголовков статей, которая сформулирована как задача регрессии - каждой эмоции сопостовляется число от 0 до 100. В 2022 году предложили датасет на основе статей с Rappler для выявления эмоций читателя \cite{anoop22readers}.
-Существует постановка задачи, в которой новости нужно классифицировать по политической идеологии, например определить кто написал статью: левый, правый или центрист. В статье \cite{bias} предлагается датасет на основе данных c сайта AllSides\footnote{\url{https://www.allsides.com/media-bias/media-bias-rating-methods}}. Также в данной статье освещается важная проблема - смещение по источнику новости (media bias). Моделям проще выучить стиль написания статей разными СМИ и предсказывать политическую идеологию по ним, вместо того, чтобы опираться на утверждения в тексте.
+\subsection{Обзор задач и моделей}
+
+К обработке новостного потока можно подходить с точки задачи классификации или регрессии. В 2007 году появилось соревнование SemEval-2007 Task 14 \cite{strapparava2007semeval}, где основная задача - выявление эмоциональной нагрузки заголовков статей, которая сформулирована как задача регрессии - каждой эмоции сопостовляется число от 0 до 100. В 2022 году предложили датасет на основе статей с Rappler для выявления эмоций читателя \cite{anoop22readers}.
+Существует постановка задачи, в которой новости нужно классифицировать по политической идеологии, например определить кто написал статью: левый, правый или центрист. В статье \cite{bias} предлагается датасет на основе данных c сайта AllSides\footnote{\url{https://www.allsides.com/media-bias/media-bias-rating-methods}}. Также в данной статье была найдена важная проблема - смещение по источнику новости (media bias). Моделям проще выучить стиль написания статей разными СМИ и предсказывать политическую идеологию по ним, вместо того, чтобы опираться на утверждения в тексте.
+
+Для классификации раньше использовались алгоритмы, основанные на праилах (rule based) и классические подходы. Они были популярны в соревновании SemEval-2007 Task 14 \cite{strapparava2007semeval}. С развитием нейросетей, в том числе больших языковых моделей, качество решений улучшилось. 
+В 2019 году была предложена модель BERT\cite{devlin2019bert}. Данная модель стала популярной для задачи классификации текстов. В статье \cite{anoop22readers}, где предлагался новый датасет, предлагалась модель Bi-LSTM с attention усреднением эмбеддингов. В статье по предвзятости новостей \cite{bias} для классификации рассматривались LSTM и BERT.
+
+Другой подход - выделение фрагментов (span identification)\cite{papay2020dissecting, toshniwal2020crosstask}. Выделение фрагментов используется для выделения ошибок в текст\cite{chen2020improving}, построения синтаксической структуры текста\cite{yeung2015automatic}, суммаризации \cite{Ma2018, la2019poli2sum, liu2021sent2span}, анализа цитирования научных статей\cite{la2019poli2sum}, построения графа знаний\cite{cheng2020ape}, выделение именованных сущностей\cite{li2019unified, rojas2022simple}. В задаче детекции манипуляций выделяются фрагменты, указывающие на манипуляцию. Для модерации платформ популярна задача выделения оскорбительных фрагментов. В 2021 был проведено соревнование SemEval-2021 Task 5\cite{pavlopoulos2021semeval}, где требовалось выделить оскорбительные фрагменты текста. Также проводилось соревнование на платформе codalab \footnote{https://competitions.codalab.org/competitions/36395}, результаты описаны в статье \cite{ravikiran2022findings}. В некторых постановках задач нужно сопоставлять фрагментам теги, указывающие на тип манипуляции. В 2020 году было проведено соревнование SemEval-2020 Task 11\cite{martino2020semeval}, где требуется выделять манипулятивные фрагменты и классифицировать их на 14 классов.
+
+Для нахождения фрагментов в задаче суммаризации использовалось SVM, логистическая регрессия, решающие деревья \cite{Ma2018}, синтаксические деревья \cite{yeung2015automatic}. С развитием нейросетей стали популярны подходы с трансформерами BERT\cite{xu2023peerda}, RoBERTa\cite{ravikiran2022findings, jurkiewicz2020applicaai}, свёрточные нейронные сети \cite{dewantara-etal-2020-3218ir}, GPT-2 \cite{nouri2022data}. Данные модели можно ансамблировать и получать результат лучше, что можно заметить в обзоре результатов соревнования SemEval-2020 Task 11\cite{martino2020semeval}. Сравнение трансформерных моделей можно увидеть в статье\cite{toshniwal2020crosstask}. Также для данной задачи предобучен SpanBERT \cite{joshi2020spanbert}. Для выделения пересекающихся фрагментов можно использовать графовые нейронные сети с BERT\cite{zaratiana2022gnner}. Также для задачи с вложенными фрагментами можно использовать multiple LSTM+CRF\cite{rojas2022simple}.
+
+\subsection{Наш вклад в задачу}
+
+...
 
 
+\section{Данные}
 
-\section{Headings: first level}
-\label{sec:headings}
+В работе решается задача выделения фрагментов с теггированием. Фрагменты могут пересекаться и им может быть сопоставлено более одного тега. В тексте выделяются фрагменты, по которым можно определить какие ценности продвигаются. Фрагменты объединяются в элемент разметки, который тоже можно протегировать. Для данной задачи размечен датасет для N текстов, в разметке участвовали k асессоров.
 
-\lipsum[4] See Section \ref{sec:headings}.
+\section{Модель}
 
-\subsection{Headings: second level}
-\lipsum[5]
-\begin{equation}
-	\xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
-\end{equation}
+Множество $D$ состоит из пар текста и разметки $(X, Y) \in D$.
+Тексты состоят из $n$ токенов: $X = \{ x_1, ..., x_n \}$. Разметка фрагментов делается для каждого тега: $Y_t = \{ y_{t, 1}, ..., y_{t, n} \} \in Y, t \in T$. $T$ - множество тегов, через $y_{t, i} \in \{0, 1\}$ обозначается принадлежность токена $i$ к одному из фрагментов для заданного тега $t$.
 
-\subsubsection{Headings: third level}
-\lipsum[6]
+Параметры модели ($\theta$) оцениваются минимизацией логистической функции потерь:
+$$
+\frac{1}{|D|} \sum_{(X, Y) \in D} \frac{1}{|X|} \sum_{i = 0}^{|X|} \frac{1}{|T|} \sum_{t \in T} [ - y_{t, i} log(p(y_{t, i}|X, t, \theta)) - (1 - y_{t, i}) log(1 - p(y_{t, i}|X, t, \theta)))] \rightarrow \min_{\theta}
+$$
 
-\paragraph{Paragraph}
-\lipsum[7]
+\section{Метрики качества}
 
+Для оценки качества модели для выделения тегированных фрагментов во многих работах используется $F_1$ мера с макро усреднением. По всей выборке для каждого тега считается матрица ошибок, точность и полнота, усредняются по тегам и считается среднее гармоническое полученных точности и полноты:
+$$
+TP_t = \sum_{(X, Y, \hat{Y}) \in \hat{D}} \sum_{i=0}^{|X|} [y_{t, i} = 1][\hat{y}_{t, i} = 1] ~~~~~~
+FP_t = \sum_{(X, Y, \hat{Y}) \in \hat{D}} \sum_{i=0}^{|X|} [y_{t, i} = 0][\hat{y}_{t, i} = 1]
+$$
+$$
+FN_t = \sum_{(X, Y, \hat{Y}) \in \hat{D}} \sum_{i=0}^{|X|} [y_{t, i} = 1][\hat{y}_{t, i} = 0]
+$$
+$$
+precision_t = \frac{TP_t}{TP_t + FP_t}~~~~~
+recall_t = \frac{TP_t}{TP_t + FN_t}
+$$
+$$
+precision = \frac{1}{|T|} \sum_{t \in T} precision_t~~~~~
+recall = \frac{1}{|T|} \sum_{t \in T} recall_t
+$$
+$$
+F_1 = \frac{2 \cdot recall \cdot precision}{recall + precision}
+$$
+Где тройка $(X, Y, \hat{Y}) \in \hat{D}$ такая, что: $(X, Y) \in D$, а $\hat{Y}$ - предсказание разметки текста $X$ моделью.
 
-
-\section{Examples of citations, figures, tables, references}
-\label{sec:others}
-
-\subsection{Citations}
-Citations use \verb+natbib+. The documentation may be found at
-\begin{center}
-	\url{http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}
-\end{center}
-
-Here is an example usage of the two main commands (\verb+citet+ and \verb+citep+): Some people thought a thing \citep{kour2014real, hadash2018estimate} but other people thought something else \citep{kour2014fast}. Many people have speculated that if we knew exactly why \citet{kour2014fast} thought this\dots
-
-\subsection{Figures}
-\lipsum[10]
-See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of the first footnote.}
-\lipsum[11]
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\textwidth]{../figures/log_reg_cs_exp.eps}
-	\caption{Sample figure caption.}
-	\label{fig:fig1}
-\end{figure}
-
-\subsection{Tables}
-See awesome Table~\ref{tab:table}.
-
-The documentation for \verb+booktabs+ (`Publication quality tables in LaTeX') is available from:
-\begin{center}
-	\url{https://www.ctan.org/pkg/booktabs}
-\end{center}
-
-
-\begin{table}
-	\caption{Sample table title}
-	\centering
-	\begin{tabular}{lll}
-		\toprule
-		\multicolumn{2}{c}{Part}                   \\
-		\cmidrule(r){1-2}
-		Name     & Description     & Size ($\mu$m) \\
-		\midrule
-		Dendrite & Input terminal  & $\sim$100     \\
-		Axon     & Output terminal & $\sim$10      \\
-		Soma     & Cell body       & up to $10^6$  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:table}
-\end{table}
-
-\subsection{Lists}
-\begin{itemize}
-	\item Lorem ipsum dolor sit amet
-	\item consectetur adipiscing elit.
-	\item Aliquam dignissim blandit est, in dictum tortor gravida eget. In ac rutrum magna.
-\end{itemize}
-
+\section{Эксперименты}
 
 \bibliographystyle{unsrtnat}
 \bibliography{references}
