@@ -19,14 +19,14 @@ requirements = '\n'.join(
 
 setup(
     # metadata
-    name='mylib',
+    name='manipulation-detection',
     version=__version__,
     license='MIT',
-    author='Andrey Grabovoy',
-    author_email="grabovoy.av@phystech.edu",
-    description='mylib, python package',
+    author='Dmitry Melikhov',
+    author_email="",
+    description='lib for training bert for span id',
     long_description=readme,
-    url='https://github.com/Intelligent-Systems-Phystech/ProjectTemplate',
+    url='https://github.com/Dmitry315/manipulation_detection',
 
     # options
     packages=find_packages(),
