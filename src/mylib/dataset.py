@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import DataLoader, Dataset
 
 
-class SpanDataset(Dataset):
+class SequenceLabelDataset(Dataset):
   def __init__(self, df, tokenizer, n_tags, max_len=512):
     self.df = df
     self.markup = []

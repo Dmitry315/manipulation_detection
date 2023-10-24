@@ -10,15 +10,17 @@ def calc_f1(y_hat, y):
     b, l, t = x.size()
     x = x.reshape((b * l, t))
     y = y.reshape((b * l, t))
-    tp = ((x == 1) & (y == 1)).to(torch.float32).sum(dim=0)
-    fp = ((x == 1) & (y == 0)).to(torch.float32).sum(dim=0)
-    fn = ((x == 0) & (y == 1)).to(torch.float32).sum(dim=0)
+    tp = ((x == 1) & (y == 1)).to(torch.float32).sum(dim=1)
+    fp = ((x == 1) & (y == 0)).to(torch.float32).sum(dim=1)
+    fn = ((x == 0) & (y == 1)).to(torch.float32).sum(dim=1)
 
     tp_mean = tp.mean()
     fp_mean = fp.mean()
     fn_mean = fn.mean()
+    recall = tp_mean / (tp_mean + fn_mean)
+    precision = tp_mean / (tp_mean + fp_mean)
     f1_micro = 2 * tp_mean / (2 * tp_mean + fp_mean + fn_mean)
-    return {'f1_micro': f1_micro}
+    return {'f1_micro': f1_micro, 'recall': recall, 'precision': precision}
 
 
 def calc_metrics(y_hat, y, metrics_func=[]):
@@ -28,11 +30,11 @@ def calc_metrics(y_hat, y, metrics_func=[]):
     return metrics
 
 
-class TokenClfModel(nn.Module):
-    def __init__(self, embedder, embed_size=512, tags=400):
+class SequenceLabelModel(nn.Module):
+    def __init__(self, embedder, embed_size=512, n_tags=100):
         super().__init__()
         self.embedder = embedder
-        self.out = nn.Linear(embed_size, tags)
+        self.out = nn.Linear(embed_size, n_tags)
 
     def forward(self, x):
         input_id = x['input_ids'].squeeze(1)
@@ -43,7 +45,7 @@ class TokenClfModel(nn.Module):
         return y
 
 
-class ClfModel(pl.LightningModule):
+class LitModel(pl.LightningModule):
 
     def __init__(self, model, loss, optimizer, scheduler, metric_functions):
         super().__init__()
