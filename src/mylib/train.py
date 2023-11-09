@@ -10,9 +10,9 @@ def calc_f1(y_hat, y):
     b, l, t = x.size()
     x = x.reshape((b * l, t))
     y = y.reshape((b * l, t))
-    tp = ((x == 1) & (y == 1)).to(torch.float32).sum(dim=1)
-    fp = ((x == 1) & (y == 0)).to(torch.float32).sum(dim=1)
-    fn = ((x == 0) & (y == 1)).to(torch.float32).sum(dim=1)
+    tp = ((x == 1) & (y == 1)).to(torch.float32).sum(dim=-1)
+    fp = ((x == 1) & (y == 0)).to(torch.float32).sum(dim=-1)
+    fn = ((x == 0) & (y == 1)).to(torch.float32).sum(dim=-1)
 
     tp_mean = tp.mean()
     fp_mean = fp.mean()
@@ -23,11 +23,38 @@ def calc_f1(y_hat, y):
     return {'f1_micro': f1_micro, 'recall': recall, 'precision': precision}
 
 
+def calc_tagless_f1(y_hat, y):
+    mask = y[:, :, -1] == -1
+    y_hat = torch.any(y_hat, keepdim=True, dim=-1)
+    y = torch.any(y, keepdim=True, dim=-1)
+    y_hat[mask] = -1
+    y[mask] = -1
+    score = calc_f1(y_hat, y)
+    return {
+        'tagless_f1_micro': score['f1_micro'], 
+        'tagless_recall': score['recall'], 
+        'tagless_precision': score['precision']
+    }
+
+
 def calc_metrics(y_hat, y, metrics_func=[]):
     metrics = {}
     for f in metrics_func:
         metrics.update(f(y_hat, y))
     return metrics
+
+
+class padBCE(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.bce = nn.BCEWithLogitsLoss()
+    
+    def forward(self, y_hat, y):
+        bs = y.size(0)
+        mask = y != -1
+        y_hat = y_hat[mask]
+        y = y[mask]
+        return self.bce(y_hat, y.float())
 
 
 class SequenceLabelModel(nn.Module):
